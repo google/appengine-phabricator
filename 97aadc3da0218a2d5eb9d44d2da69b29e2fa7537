@@ -1,0 +1,1 @@
+{"reviewRef": "refs/heads/ojarjur/support-git-notes-metadata", "targetRef": "refs/heads/master", "description": "Added support for git-notes based metadata to the Phabricator image", "reviewers": ["ojarjur"]}
