@@ -1,1 +1,0 @@
-{"reviewRef":"refs/heads/ojarjur/remove-sync-git-notes","targetRef":"refs/heads/master","description":"Removed the sync_git_notes.sh script, and changed to clone the copy of that script from the shared tools repo"}
