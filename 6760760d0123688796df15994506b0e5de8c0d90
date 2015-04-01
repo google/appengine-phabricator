@@ -1,1 +1,0 @@
-{"reviewRef":"refs/heads/ojarjur/gae-logs","targetRef":"refs/heads/master","description":"Changed the log locations so that the logs are picked up by the managed VMs logs ingestor"}
