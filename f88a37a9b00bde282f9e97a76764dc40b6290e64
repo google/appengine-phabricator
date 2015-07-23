@@ -1,0 +1,1 @@
+{"timestamp":"1437676713","reviewRef":"refs/heads/ckerur/pymail","targetRef":"refs/heads/master","requester":"ckerur@google.com","reviewers":["ojarjur"],"description":"Initial commit for sending email using a custom Adapter.\nThe python CLI currently does not handle cc or attachments"}
