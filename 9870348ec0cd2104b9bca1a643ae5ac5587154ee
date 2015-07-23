@@ -1,0 +1,1 @@
+{"reviewRef":"refs/heads/ojarjur/mirror-sync","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["amshali@google.com","bstanley@google.com"],"description":"Removed the usage of the sync_git_notes.sh script, and switched to having the git-mirror sync the repos"}
