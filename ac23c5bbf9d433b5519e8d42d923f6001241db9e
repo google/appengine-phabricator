@@ -1,0 +1,1 @@
+{"timestamp":"1438035231","reviewRef":"refs/heads/ojarjur/remove-config-patch","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Remove the old, no-longer used patches that allowed a user to configure the SMTP user and password via the Phabricator UI"}

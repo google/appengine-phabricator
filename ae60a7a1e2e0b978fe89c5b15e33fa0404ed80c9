@@ -1,0 +1,1 @@
+{"reviewRef":"refs/heads/fix-apc-slam-defense-warning","targetRef":"refs/heads/master","reviewers":["amshali@google.com"],"description":"Changed the image's apc configuration to silence a setup warning that new versions of Phabricator have started complaining about."}
