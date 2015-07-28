@@ -57,10 +57,10 @@ and tags it with dev user(and uploads it to gcr.io):
 
     make
 
-### Building a test image
+### Building a testing image
 
 The image is built using Make, and the default target builds a new testing image
-and tage it as testing(and uploads it to gcr.io):
+and tags it as testing(and uploads it to gcr.io):
 
     make testing
 
