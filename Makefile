@@ -11,6 +11,7 @@ build:
 	gcloud preview docker push gcr.io/developer_tools_bundle/bundle-phabricator:$(user)-dev
 
 testing:
+	third_party/arcanist/bin/arc liberate third_party/phabricator/
 	docker build -t google/phabricator-appengine .
 	docker tag -f google/phabricator-appengine gcr.io/developer_tools_bundle/bundle-phabricator:testing
 	gcloud preview docker push gcr.io/developer_tools_bundle/bundle-phabricator:testing

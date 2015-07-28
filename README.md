@@ -50,12 +50,19 @@ when checking out the code:
     git clone --recurse-submodules https://source.developers.google.com/id/vMh0AXP1f1h phabricator-image
     cd phabricator-image
 
-### Building a testing image
+### Building a dev image to test your changes
 
 The image is built using Make, and the default target builds a new testing image
-(and uploads it to gcr.io):
+and tags it with dev user(and uploads it to gcr.io):
 
     make
+
+### Building a test image
+
+The image is built using Make, and the default target builds a new testing image
+and tage it as testing(and uploads it to gcr.io):
+
+    make testing
 
 ### Labelling a validated testing image as "latest"
 
