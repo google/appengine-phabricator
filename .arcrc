@@ -1,0 +1,11 @@
+{
+  "hosts": {
+    "_PHABRICATOR_BASE_URI_api/": {
+      "user": "git-mirror",
+      "cert": "_CONDUIT_CERT_"
+    }
+  },
+  "config": {
+    "default": "_PHABRICATOR_BASE_URI_"
+  }
+}
