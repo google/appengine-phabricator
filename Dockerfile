@@ -90,9 +90,7 @@ RUN /opt/compile_time_config.sh
 
 # Configure the external Docker environment, including environment variables.
 EXPOSE 8080
-ENV SQL_HOST 127.0.0.1
-ENV SQL_USER root
-ENV SQL_PASS PASSWORD
+ENV SQL_INSTANCE phabricator
 ENV PHABRICATOR_BASE_URI PHABRICATOR_BASE_URI
 ENV ALTERNATE_FILE_DOMAIN ALTERNATE_FILE_DOMAIN
 
@@ -132,5 +130,8 @@ RUN chmod +x /opt/run_time_config.sh && \
   export PATH=${PATH}:/usr/local/go/bin/ && \
   export GOPATH=/opt/ && \
   go get source.developers.google.com/id/AOYtBqJZlBK.git/git-phabricator-mirror
+
+# Install uuidgen and jq, so that the run-time setup script can setup the Cloud SQL instance.
+RUN apt-get install -y --no-install-recommends uuid-runtime jq
 
 CMD ["/bin/sh", "-c", "echo One time config; /opt/run_time_config.sh; echo Upgrading the SQL database; /opt/phabricator/bin/storage upgrade --force; /usr/bin/supervisord"]
