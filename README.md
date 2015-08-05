@@ -59,7 +59,7 @@ tags it with the name "google/phabricator-appengine":
 
 You can deploy this locally-built image to a test project using the "deploy" target:
 
-    make deploy ${PROJECT}
+    make deploy PROJECT=${PROJECT}
 
 ### Building a testing or stable image
 
@@ -67,7 +67,7 @@ The makefile also defines rules for creating a shared testing image, and uploadi
 
     make testing
 
-... and one for labelling the current "testing" image as "latest" (which is our):
+... and one for labelling the current "testing" image as "latest" (which denotes our stable image):
 
     make release
 
