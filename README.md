@@ -63,6 +63,8 @@ You can deploy this locally-built image to a test project using the "deploy" tar
 
 ### Building a testing or stable image
 
+*Note that these two rules require permissions that are restricted to the core developer team.*
+
 The makefile also defines rules for creating a shared testing image, and uploading it to gcr.io.:
 
     make testing
@@ -70,8 +72,6 @@ The makefile also defines rules for creating a shared testing image, and uploadi
 ... and one for labelling the current "testing" image as "latest" (which denotes our stable image):
 
     make release
-
-Note that these two rules require permissions that are restricted to the core developer team.
 
 ## Development
 
