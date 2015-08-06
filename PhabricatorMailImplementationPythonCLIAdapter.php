@@ -86,16 +86,20 @@ final class PhabricatorMailImplementationPythonCLIAdapter
     return false;
   }
 
+/**
+ * The method that calls the Python CLI to do the actual mail sending.
+ * All user provided arguments are escaped so as to account for any special characters within it.
+ */
   public function send() {
-    $email_subject =  $this->params['subject'];
-    $email_body = $this->params['body'];
-    $email_tos =  json_encode($this->params['tos']);
+    $email_subject =  escapeshellarg($this->params['subject']);
+    $email_body = escapeshellarg($this->params['body']);
+    $email_tos =  escapeshellarg(json_encode($this->params['tos']));
     $email_ccs = null;
 		if(array_key_exists('ccs', $this->params)) {
-        $email_ccs = json_encode($this->params['ccs']);
+        $email_ccs = escapeshellarg(json_encode($this->params['ccs']));
 		}
 
-    $cmd = "python /opt/send_mail.py --to '$email_tos' --email_subject '$email_subject' --email_body '$email_body' --cc '$email_ccs'";
+    $cmd = "python /opt/send_mail.py --to $email_tos --email_subject $email_subject --email_body $email_body --cc $email_ccs";
     echo $cmd;
     exec($cmd);
     return true;
