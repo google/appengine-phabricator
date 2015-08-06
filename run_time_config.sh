@@ -12,7 +12,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+mkdir -p /var/log/app_engine/custom_logs
+
 cd /opt/phabricator
+export SQL_DETAILS="$(/google/google-cloud-sdk/bin/gcloud sql instances describe ${SQL_INSTANCE} --format=json)"
+echo "${SQL_DETAILS}" >> /var/log/app_engine/custom_logs/setup.log
+
+export SQL_HOST=$(echo ${SQL_DETAILS} | jq -r '.ipAddresses[0].ipAddress')
+export SQL_USER=root
+echo "Setting up a connection to ${SQL_INSTANCE} at ${SQL_HOST} as ${SQL_USER}" >> /var/log/app_engine/custom_logs/setup.log
+
+export SQL_PASS="$(uuidgen)"
+/google/google-cloud-sdk/bin/gcloud sql instances set-root-password \
+  --password "${SQL_PASS}" "${SQL_INSTANCE}"
 
 # Configure Phabricator's connection to the SQL server.
 ./bin/config set mysql.host ${SQL_HOST}
@@ -32,5 +44,3 @@ EOF
 ./bin/config set phabricator.base-uri ${PHABRICATOR_BASE_URI}
 ./bin/config set security.alternate-file-domain ${ALTERNATE_FILE_DOMAIN}
 ./bin/config set phd.taskmasters 4
-
-mkdir -p /var/log/app_engine/custom_logs

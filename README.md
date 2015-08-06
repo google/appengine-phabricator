@@ -28,7 +28,7 @@ This image includes a daemon which
 [mirrors code reviews to and from git-notes](https://source.developers.google.com/id/AOYtBqJZlBK).
 
 That allows the Phabricator instance to integrate with the
-[git-review command line tool](https://source.developers.google.com/id/0tH0wAQFren), and
+[git-appraise command line tool](https://source.developers.google.com/id/0tH0wAQFren), and
 makes the use of the arcanist command line tool optional.
 
 Operations performed by the mirror daemon show up as the "git-mirror" bot, which is automatically
@@ -52,22 +52,24 @@ when checking out the code:
 
 ### Building a dev image to test your changes
 
-The image is built using Make, and the default target builds a new testing image
-and tags it with dev user(and uploads it to gcr.io):
+The image is built using Make. The default target builds a new Docker image and
+tags it with the name "google/phabricator-appengine":
 
     make
 
-### Building a testing image
+You can deploy this locally-built image to a test project using the "deploy" target:
 
-The image is built using Make, and the testing target builds a new testing image
-and tags it as testing(and uploads it to gcr.io):
+    make deploy PROJECT=${PROJECT}
+
+### Building a testing or stable image
+
+*Note that these two rules require permissions that are restricted to the core developer team.*
+
+The makefile also defines rules for creating a shared testing image, and uploading it to gcr.io.:
 
     make testing
 
-### Labelling a validated testing image as "latest"
-
-Once you've validated that a testing image is good, mark it as stable using the "release"
-make target:
+... and one for labelling the current "testing" image as "latest" (which denotes our stable image):
 
     make release
 

@@ -1,0 +1,57 @@
+# Copyright 2015 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+module: phabricator
+runtime: custom
+vm: true
+api_version: 1
+threadsafe: on
+
+manual_scaling:
+  instances: 1
+
+beta_settings:
+  service_account_scopes: https://www.googleapis.com/auth/projecthosting,https://www.googleapis.com/auth/gerritcodereview,https://www.googleapis.com/auth/sqlservice.admin
+
+resources:
+  cpu: 1
+  memory_gb: 3
+
+builtins:
+- appstats: on
+
+env_variables:
+  SQL_INSTANCE: "${SQL_INSTANCE}"
+  PHABRICATOR_BASE_URI: "https://phabricator-dot-${PROJECT}.appspot.com"
+  ALTERNATE_FILE_DOMAIN: "https://${VERSION}-dot-phabricator-dot-${PROJECT}.appspot.com"
+
+network:
+  name: phabricator
+
+handlers:
+
+# Favicon.  Without this, the browser hits this once per page view.
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
+# Main app.  All the real work is here.
+- url: /api/.*
+  script: main.application
+- url: /auth/register/
+  script: main.application
+  secure: always
+  login: admin
+- url: /.*
+  script: main.application
+  secure: always
