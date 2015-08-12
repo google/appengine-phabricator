@@ -94,7 +94,7 @@ final class PhabricatorMailImplementationPythonCLIAdapter
     $email_subject =  escapeshellarg($this->params['subject']);
     $email_body = escapeshellarg($this->params['body']);
     $email_tos =  escapeshellarg(json_encode($this->params['tos']));
-    $email_ccs = '';
+    $email_ccs = escapeshellarg(null);
 		if(array_key_exists('ccs', $this->params)) {
         $email_ccs = escapeshellarg(json_encode($this->params['ccs']));
 		}
