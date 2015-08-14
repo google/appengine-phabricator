@@ -32,8 +32,8 @@ builtins:
 
 env_variables:
   SQL_INSTANCE: "${SQL_INSTANCE}"
-  PHABRICATOR_BASE_URI: "https://phabricator-dot-${PROJECT}.appspot.com"
-  ALTERNATE_FILE_DOMAIN: "https://${VERSION}-dot-phabricator-dot-${PROJECT}.appspot.com"
+  PHABRICATOR_BASE_URI: "https://phabricator-dot-${PROJECT}.appspot.com/"
+  ALTERNATE_FILE_DOMAIN: "https://${VERSION}-dot-phabricator-dot-${PROJECT}.appspot.com/"
 
 network:
   name: phabricator
