@@ -24,3 +24,4 @@ cd /opt/phabricator
 ./bin/config set phpmailer.smtp-protocol ssl
 ./bin/config set pygments.enabled true
 ./bin/config set config.ignore-issues '{"mysql.ft_boolean_syntax":true, "mysql.ft_stopword_file": true, "daemons.need-restarting": true, "mysql.max_allowed_packet": true, "large-files": true}'
+./bin/config set environment.append-paths '["/usr/lib/git-core/"]'

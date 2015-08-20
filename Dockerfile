@@ -30,7 +30,9 @@ RUN apt-get update && apt-get upgrade -y && \
 # Supervisor
   supervisor \
 # Python pip for Pygment
-  python-pip && \
+  python-pip \
+# Mercurial to support hosted hg repos
+  mercurial && \
   apt-get clean && \
   pip install Pygments
 
