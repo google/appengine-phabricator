@@ -44,3 +44,11 @@ EOF
 ./bin/config set phabricator.base-uri ${PHABRICATOR_BASE_URI}
 ./bin/config set security.alternate-file-domain ${ALTERNATE_FILE_DOMAIN}
 ./bin/config set phd.taskmasters 4
+
+# Restore the /var/repo directory from the GCS backup (if one exists)
+PROJECT=$(curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H 'Metadata-Flavor: Google')
+BACKUP_FILE=$(/google/google-cloud-sdk/bin/gsutil cat gs://${PROJECT}.appspot.com/backups/phabricator.backup)
+if [ -n "$BACKUP_FILE" ]; then
+  /google/google-cloud-sdk/bin/gsutil cp ${BACKUP_FILE} /tmp/phabricator.backup.tgz
+  tar -xvzf /tmp/phabricator.backup.tgz -C /
+fi
