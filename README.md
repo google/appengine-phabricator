@@ -22,6 +22,12 @@ under the "third_party" directory named "arcanist", "libphutil", and "phabricato
 
 ## Included extras
 
+### Backups
+
+This image automatically backs up the contents of the /var/repo directory to the project's default
+Google Cloud Storage bucket. Backups are performed every 60 seconds, and on startup the image
+automatically tries to restore from the most recent backup (if one exists).
+
 ### Git/Phabricator mirror
 
 This image includes a daemon which
