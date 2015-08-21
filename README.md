@@ -28,6 +28,11 @@ This image automatically backs up the contents of the /var/repo directory to the
 Google Cloud Storage bucket. Backups are performed every 60 seconds, and on startup the image
 automatically tries to restore from the most recent backup (if one exists).
 
+Note that this means you will be billed by GCS for the storage of this backup. To help minimize
+this, the image automatically deletes the previous backup after generating a new one.
+
+<!-- TODO(ojarjur): Add a way to disable backups for users who don't want to use hosted repos. -->
+
 ### Git/Phabricator mirror
 
 This image includes a daemon which
