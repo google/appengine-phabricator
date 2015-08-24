@@ -132,7 +132,7 @@ RUN chmod +x /opt/run_time_config.sh && \
   tar -C /usr/local -xzf /opt/go1.4.2.linux-amd64.tar.gz && \
   export PATH=${PATH}:/usr/local/go/bin/ && \
   export GOPATH=/opt/ && \
-  go get source.developers.google.com/id/AOYtBqJZlBK.git/git-phabricator-mirror
+  go get github.com/google/git-phabricator-mirror/git-phabricator-mirror
 
 # Install uuidgen and jq, so that the run-time setup script can setup the Cloud SQL instance.
 RUN apt-get install -y --no-install-recommends uuid-runtime jq
