@@ -36,10 +36,10 @@ this, the image automatically deletes the previous backup after generating a new
 ### Git/Phabricator mirror
 
 This image includes a daemon which
-[mirrors code reviews to and from git-notes](https://source.developers.google.com/id/AOYtBqJZlBK).
+[mirrors code reviews to and from git-notes](https://https://github.com/google/git-phabricator-mirror).
 
 That allows the Phabricator instance to integrate with the
-[git-appraise command line tool](https://source.developers.google.com/id/0tH0wAQFren), and
+[git-appraise command line tool](https://github.com/google/git-appraise), and
 makes the use of the arcanist command line tool optional.
 
 Operations performed by the mirror daemon show up as the "git-mirror" bot, which is automatically
@@ -58,8 +58,8 @@ the service account of the VM (hence the requirement for the projecthosting scop
 Since Phabricator and its dependencies are fetched as git submodules, you have to include them
 when checking out the code:
 
-    git clone --recurse-submodules https://source.developers.google.com/id/vMh0AXP1f1h phabricator-image
-    cd phabricator-image
+    git clone --recurse-submodules https://github.com/google/appengine-phabricator
+    cd appengine-phabricator
 
 ### Building a dev image to test your changes
 
