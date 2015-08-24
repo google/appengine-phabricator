@@ -20,9 +20,9 @@ deploy: build deploy_requirements
 
 testing: build
 	docker tag -f google/phabricator-appengine gcr.io/developer_tools_bundle/bundle-phabricator:testing
-	gcloud preview docker push gcr.io/developer_tools_bundle/bundle-phabricator:testing
+	gcloud docker push gcr.io/developer_tools_bundle/bundle-phabricator:testing
 
 release:
-	gcloud preview docker pull gcr.io/developer_tools_bundle/bundle-phabricator:testing
+	gcloud docker pull gcr.io/developer_tools_bundle/bundle-phabricator:testing
 	docker tag -f gcr.io/developer_tools_bundle/bundle-phabricator:testing gcr.io/developer_tools_bundle/bundle-phabricator:latest
 	docker push gcr.io/developer_tools_bundle/bundle-phabricator:latest
