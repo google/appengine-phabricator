@@ -36,7 +36,7 @@ this, the image automatically deletes the previous backup after generating a new
 ### Git/Phabricator mirror
 
 This image includes a daemon which
-[mirrors code reviews to and from git-notes](https://https://github.com/google/git-phabricator-mirror).
+[mirrors code reviews to and from git-notes](https://github.com/google/git-phabricator-mirror).
 
 That allows the Phabricator instance to integrate with the
 [git-appraise command line tool](https://github.com/google/git-appraise), and
