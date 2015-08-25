@@ -1,0 +1,1 @@
+{"timestamp":"1440530359","reviewRef":"refs/heads/ojarjur/cleanup-deploy","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Updates to the config files such that build and deployment happen locally in a more hermetic way."}
