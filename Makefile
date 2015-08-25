@@ -1,10 +1,6 @@
 build:
 # To clean the sub-module and build the xhpast binary needed to find any new class in Docker env
 	git submodule foreach 'git clean -fX'
-# TODO(ckerur): We should get rid of the below line, since this means we need to run arc liberate
-# on the host as a pre-step to docker build. Figure out how to emulate host conditions on docker
-# container and remove
-	third_party/arcanist/bin/arc liberate third_party/phabricator/
 	docker build -t google/phabricator-appengine .
 
 deploy_requirements:

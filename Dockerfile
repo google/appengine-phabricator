@@ -75,6 +75,8 @@ RUN pip install --upgrade pip>=6.1.1 && \
   chmod +x /opt/send_mail.py && \
 # Add Google App Engine email class for sending out email. This is a Python implementation
   chmod +x /opt/phabricator/src/applications/metamta/adapter/PhabricatorMailImplementationPythonCLIAdapter.php && \
+# build-essential gives us "make", which is required by the "arc liberate" command below.
+  apt-get install -y build-essential && \
 # Run liberate to build a new library map so the class is found by phabricator
 	/opt/arcanist/bin/arc liberate /opt/phabricator/
 
