@@ -27,6 +27,7 @@ while [ 1 ]; do
   # TODO(ojarjur): Support incremental backups
   echo "Copying backup file to gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" 1>&2
   /google/google-cloud-sdk/bin/gsutil cp /tmp/"$BACKUP_FILE" gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}
+  rm /tmp/"${BACKUP_FILE}"
 
   PREVIOUS_BACKUP=$(/google/google-cloud-sdk/bin/gsutil cat gs://${PROJECT}.appspot.com/backups/phabricator.backup)
   echo "gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" | /google/google-cloud-sdk/bin/gsutil cp - gs://${PROJECT}.appspot.com/backups/phabricator.backup
