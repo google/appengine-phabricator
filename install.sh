@@ -103,5 +103,5 @@ fi
 sed -i -e "s/\${SQL_INSTANCE}/${INSTANCE_NAME}/" \
   -e "s/\${PROJECT}/${PROJECT}/" \
   -e "s/\${VERSION}/${VERSION}/" config/app.yaml
-gcloud --project="${PROJECT}" --quiet preview app deploy --version=${VERSION} --set-default config/app.yaml
+gcloud --project="${PROJECT}" --quiet preview app deploy --docker-build=local --version=${VERSION} --set-default config/app.yaml
 git checkout -- config/app.yaml
