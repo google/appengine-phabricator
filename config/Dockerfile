@@ -11,4 +11,4 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from google/phabricator-appengine
+from gcr.io/developer_tools_bundle/bundle-phabricator

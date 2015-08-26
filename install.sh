@@ -18,7 +18,7 @@ PROJECT=$1
 VERSION=1
 
 # Local tag for the Docker image we deploy
-DOCKER_TAG="google/phabricator-appengine"
+LOCAL_IMAGE="google/phabricator-appengine"
 
 function defaultModuleExists() {
   local project=$1
@@ -72,12 +72,18 @@ if ! defaultModuleExists $PROJECT; then
   fi
 fi
 
-# Ensure that we have a local image to deploy
-if [ -z "$(docker images -q --all ${DOCKER_TAG})" ]; then
-  docker pull gcr.io/developer_tools_bundle/bundle-phabricator:latest
-  docker tag gcr.io/developer_tools_bundle/bundle-phabricator:latest ${DOCKER_TAG}
-fi
+# If we have a local image, then push it to gcr.io and update the Dockerfile
+if [ -n "$(docker images -q --all ${LOCAL_IMAGE})" ]; then
+  export REMOTE_IMAGE="gcr.io/${PROJECT}/appengine-phabricator"
+  export ESCAPED_REMOTE_IMAGE="gcr\.io\/${PROJECT}\/appengine-phabricator"
 
+  # Push the local image to the project's gcr.io repo
+  docker tag -f ${LOCAL_IMAGE} ${REMOTE_IMAGE}
+  gcloud docker push ${REMOTE_IMAGE}
+
+  # Update the Dockerfile to point at that newly pushed image
+  sed -i -e "s/gcr\.io\/developer_tools_bundle\/bundle-phabricator/${ESCAPED_REMOTE_IMAGE}/" config/Dockerfile
+fi
 
 # Ensure that a Cloud SQL instance exists
 if [ -z "$(gcloud --project=${PROJECT} sql instances list | grep phabricator)" ]; then
@@ -103,5 +109,5 @@ fi
 sed -i -e "s/\${SQL_INSTANCE}/${INSTANCE_NAME}/" \
   -e "s/\${PROJECT}/${PROJECT}/" \
   -e "s/\${VERSION}/${VERSION}/" config/app.yaml
-gcloud --project="${PROJECT}" --quiet preview app deploy --docker-build=local --version=${VERSION} --set-default config/app.yaml
-git checkout -- config/app.yaml
+gcloud --project="${PROJECT}" --quiet preview app deploy --version=${VERSION} --set-default config/app.yaml
+git checkout -- config/app.yaml config/Dockerfile
