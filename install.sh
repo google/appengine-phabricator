@@ -89,7 +89,6 @@ fi
 if [ -z "$(gcloud --project=${PROJECT} sql instances list | grep phabricator)" ]; then
   gcloud --quiet --project="${PROJECT}" sql instances create "phabricator" \
     --backup-start-time="00:00" \
-    --require-ssl \
     --assign-ip \
     --authorized-networks "0.0.0.0/0" \
     --tier="D1" \
