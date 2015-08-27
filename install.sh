@@ -93,8 +93,7 @@ if [ -z "$(gcloud --project=${PROJECT} sql instances list | grep phabricator)" ]
     --authorized-networks "0.0.0.0/0" \
     --tier="D1" \
     --pricing-plan="PACKAGE" \
-    --database-flags="sql_mode=STRICT_ALL_TABLES" \
-    --database-flags="ft_min_word_len=3"
+    --database-flags="sql_mode=STRICT_ALL_TABLES,ft_min_word_len=3"
 fi
 
 INSTANCE_NAME=$(gcloud --project="${PROJECT}" sql instances list | grep phabricator | cut -d " " -f 1)
