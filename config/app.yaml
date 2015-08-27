@@ -38,6 +38,9 @@ env_variables:
 network:
   name: phabricator
 
+# The default health check runs every 5 seconds and restarts the VM after 5 minutes of failures.
+# This is not sufficient for us, as the first time the app is run it will create all of the
+# databases required by Phabricator, and that can take more than 5 minutes.
 health_check:
   enable_health_check: True
   check_interval_sec: 60
