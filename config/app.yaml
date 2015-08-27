@@ -38,6 +38,14 @@ env_variables:
 network:
   name: phabricator
 
+health_check:
+  enable_health_check: True
+  check_interval_sec: 60
+  timeout_sec: 30
+  unhealthy_threshold: 1
+  healthy_threshold: 1
+  restart_threshold: 10
+
 handlers:
 
 # Favicon.  Without this, the browser hits this once per page view.
