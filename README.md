@@ -2,17 +2,23 @@
 
 This repo defines a Docker Image that can be used to run Phabricator on App Engine Managed VMs.
 
-## Prerequisites
+## Getting started
 
-The built image requires an external MySQL instance, and must be run inside of a GCE VM with
-the "https://www.googleapis.com/auth/projecthosting" service account scope.
+### Getting the code
 
-There are four environment variables that must be passed to a Docker container running the image:
+Since Phabricator and its dependencies are fetched as git submodules, you have to include them
+when checking out the code:
 
-1.  "SQL_HOST": The IPv4 address of the MySQL instance
-2.  "SQL_PASS": The root password for the MySQL instance
-3.  "PHABRICATOR_BASE_URI": The URL of the Phabricator instance (for linking back to itself)
-4.  "ALTERNATE_FILE_DOMAIN": A second URL for the Phabricator instance used for linking to untrusted user content
+    git clone --recurse-submodules https://github.com/google/appengine-phabricator
+    cd appengine-phabricator
+
+### Installing
+
+The source code includes a script named "install.sh", which deploys the image to a Managed VM.
+Assuming that you have your GCP project's name stored in the environment variable "PROJECT", run
+the following:
+
+    ./install.sh ${PROJECT}
 
 ## Phabricator version
 
@@ -51,15 +57,19 @@ This image includes a git credential helper that automatically authenticates acc
 [Google Cloud Repositories](https://cloud.google.com/tools/repo/cloud-repositories) using
 the service account of the VM (hence the requirement for the projecthosting scope).
 
-## Building
+## Development
 
-### Getting the code
+### Prerequisites
 
-Since Phabricator and its dependencies are fetched as git submodules, you have to include them
-when checking out the code:
+The built image requires an external MySQL instance, and must be run inside of a GCE VM with
+the "https://www.googleapis.com/auth/projecthosting" service account scope.
 
-    git clone --recurse-submodules https://github.com/google/appengine-phabricator
-    cd appengine-phabricator
+There are four environment variables that must be passed to a Docker container running the image:
+
+1.  "SQL_HOST": The IPv4 address of the MySQL instance
+2.  "SQL_PASS": The root password for the MySQL instance
+3.  "PHABRICATOR_BASE_URI": The URL of the Phabricator instance (for linking back to itself)
+4.  "ALTERNATE_FILE_DOMAIN": A second URL for the Phabricator instance used for linking to untrusted user content
 
 ### Building a dev image to test your changes
 
@@ -83,8 +93,6 @@ The makefile also defines rules for creating a shared testing image, and uploadi
 ... and one for labelling the current "testing" image as "latest" (which denotes our stable image):
 
     make release
-
-## Development
 
 ### Updating the Phabricator version
 
