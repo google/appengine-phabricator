@@ -1,0 +1,1 @@
+{"timestamp":"1440713262","reviewRef":"refs/heads/ojarjur/increase-healthcheck-threshold","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Increased the health check threshold to account for initial setup where a large number of databases have to be created, delaying the initial healthy response."}
