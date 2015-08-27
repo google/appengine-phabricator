@@ -100,7 +100,7 @@ INSTANCE_NAME=$(gcloud --project="${PROJECT}" sql instances list | grep phabrica
 
 # Ensure that a private networks exists for Phabricator
 if [ -z "$(gcloud --project=${PROJECT} compute networks list | grep phabricator)" ]; then
-  gcloud --project="${PROJECT}" compute networks create phabricator
+  gcloud --project="${PROJECT}" compute networks create phabricator --range "10.0.0.0/24"
 fi
 
 # Set the appropriate environment variables in the app.yaml file
