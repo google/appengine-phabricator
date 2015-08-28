@@ -1,0 +1,1 @@
+{"timestamp":"1440786545","reviewRef":"refs/heads/ojarjur/fix-webroot-permissions","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Fixed directory permissions of the /opt/phabricator/webroot/ directory that were causing issues with newer versions of apache."}
