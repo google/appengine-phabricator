@@ -86,6 +86,7 @@ ADD ./compile_time_config.sh /opt/compile_time_config.sh
 RUN ln -s /etc/apache2/sites-available/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf && \
   mkdir -p /opt/phabricator/webroot/_ah && \
   echo ok > /opt/phabricator/webroot/_ah/health && \
+  chmod a+x /opt && chmod a+x /opt/phabricator && chmod -R a+rx /opt/phabricator/webroot/ && \
   mkdir -p /var/tmp/phd/pid && \
   mkdir -p /var/repo && \
   chown www-data:www-data /var/repo && \
