@@ -127,6 +127,7 @@ ADD ./.arcrc /opt/.arcrc
 ADD ./run_time_config.sh /opt/run_time_config.sh
 ADD ./setup_arcrc.sh /opt/setup_arcrc.sh
 ADD ./backup.sh /opt/backup.sh
+ADD ./kill-hanging-git-commands.sh /opt/kill-hanging-git-commands.sh
 ADD https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz /opt/go1.4.2.linux-amd64.tar.gz
 RUN chmod +x /opt/run_time_config.sh && \
   chmod +x /opt/setup_arcrc.sh && \

@@ -13,12 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file defines a supervisord event listener which backs up the "/var/repo" directory to GCS.
+# This file defines a supervisord event listener which backs up the "/var/repo"
+# directory to GCS.
+#
+# Note that this assumes that it is only sent header lines with no event payloads,
+# so it should only be used for events that have no body (such as TICK_N).
 
 PROJECT=$(curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H 'Metadata-Flavor: Google')
 echo "READY"
 
-while [ 1 ]; do
+while read line; do
+  echo "RESULT 2"
+  echo "OK"
+
   BACKUP_FILE="repo-backup-$(date --iso-8601=seconds).tgz"
 
   echo "Creating backup file ${BACKUP_FILE}" 1>&2
@@ -33,7 +40,5 @@ while [ 1 ]; do
   echo "gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" | /google/google-cloud-sdk/bin/gsutil cp - gs://${PROJECT}.appspot.com/backups/phabricator.backup
   /google/google-cloud-sdk/bin/gsutil rm ${PREVIOUS_BACKUP}
 
-  echo "RESULT 2"
-  echo "OK"
   echo "READY"
 done
