@@ -20,25 +20,26 @@
 # so it should only be used for events that have no body (such as TICK_N).
 
 PROJECT=$(curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H 'Metadata-Flavor: Google')
+# We must output "READY" before supervisord will send events
 echo "READY"
 
-while read line; do
-  echo "RESULT 2"
-  echo "OK"
+# Read in the event header sent by supervisord
+read
 
-  BACKUP_FILE="repo-backup-$(date --iso-8601=seconds).tgz"
+# We must output "RESULT 2\nOK" to let supervisord know the event has been accepted
+echo "RESULT 2"
+echo "OK"
 
-  echo "Creating backup file ${BACKUP_FILE}" 1>&2
-  tar -cvzf /tmp/"$BACKUP_FILE" /var/repo
+BACKUP_FILE="repo-backup-$(date --iso-8601=seconds).tgz"
 
-  # TODO(ojarjur): Support incremental backups
-  echo "Copying backup file to gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" 1>&2
-  /google/google-cloud-sdk/bin/gsutil cp /tmp/"$BACKUP_FILE" gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}
-  rm /tmp/"${BACKUP_FILE}"
+echo "Creating backup file ${BACKUP_FILE}" 1>&2
+tar -cvzf /tmp/"$BACKUP_FILE" /var/repo
 
-  PREVIOUS_BACKUP=$(/google/google-cloud-sdk/bin/gsutil cat gs://${PROJECT}.appspot.com/backups/phabricator.backup)
-  echo "gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" | /google/google-cloud-sdk/bin/gsutil cp - gs://${PROJECT}.appspot.com/backups/phabricator.backup
-  /google/google-cloud-sdk/bin/gsutil rm ${PREVIOUS_BACKUP}
+# TODO(ojarjur): Support incremental backups
+echo "Copying backup file to gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" 1>&2
+/google/google-cloud-sdk/bin/gsutil cp /tmp/"$BACKUP_FILE" gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}
+rm /tmp/"${BACKUP_FILE}"
 
-  echo "READY"
-done
+PREVIOUS_BACKUP=$(/google/google-cloud-sdk/bin/gsutil cat gs://${PROJECT}.appspot.com/backups/phabricator.backup)
+echo "gs://${PROJECT}.appspot.com/backups/${BACKUP_FILE}" | /google/google-cloud-sdk/bin/gsutil cp - gs://${PROJECT}.appspot.com/backups/phabricator.backup
+/google/google-cloud-sdk/bin/gsutil rm ${PREVIOUS_BACKUP}

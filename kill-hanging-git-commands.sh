@@ -19,12 +19,13 @@
 # Note that this assumes that it is only sent header lines with no event payloads,
 # so it should only be used for events that have no body (such as TICK_N).
 
+# We must output "READY" before supervisord will send events
 echo "READY"
 
-while read line; do
-    echo "RESULT 2"
-    echo "OK"
-    killall --older-than 10m git-remote-https
+# Read in the next event header
+read
 
-    echo "READY"
-done
+# We must output "RESULT 2\nOK" to let supervisord know the event has been accepted
+echo "RESULT 2"
+echo "OK"
+killall --older-than 10m git-remote-https
