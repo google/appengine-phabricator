@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Copyright 2015 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,18 @@ mkdir -p /var/log/app_engine/custom_logs
 
 cd /opt/phabricator
 export SQL_DETAILS="$(/google/google-cloud-sdk/bin/gcloud sql instances describe ${SQL_INSTANCE} --format=json)"
+if [ -z "${SQL_DETAILS}" ]; then
+  echo "Failed to lookup details for the '${SQL_INSTANCE}' Cloud SQL instance" >> /var/log/app_engine/custom_logs/setup.log
+  exit
+fi
 echo "${SQL_DETAILS}" >> /var/log/app_engine/custom_logs/setup.log
 
 export SQL_HOST=$(echo ${SQL_DETAILS} | jq -r '.ipAddresses[0].ipAddress')
+if [ -z "${SQL_HOST}" ]; then
+  echo "Failed to lookup the IP address of the '${SQL_INSTANCE}' Cloud SQL instance" >> /var/log/app_engine/custom_logs/setup.log
+  exit
+fi
+
 export SQL_USER=root
 echo "Setting up a connection to ${SQL_INSTANCE} at ${SQL_HOST} as ${SQL_USER}" >> /var/log/app_engine/custom_logs/setup.log
 

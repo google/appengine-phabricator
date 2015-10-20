@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Copyright 2015 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -97,6 +97,11 @@ if [ -z "$(gcloud --project=${PROJECT} sql instances list | grep phabricator)" ]
 fi
 
 INSTANCE_NAME=$(gcloud --project="${PROJECT}" sql instances list | grep phabricator | cut -d " " -f 1)
+if [ -z "${INSTANCE_NAME}" ]; then
+  # We could not load the name of the Cloud SQL instance, so we need to bail out.
+  echo "Failed to load the name of the Cloud SQL instance to use for Phabricator"
+  exit
+fi
 
 # Ensure that a private networks exists for Phabricator
 if [ -z "$(gcloud --project=${PROJECT} compute networks list | grep phabricator)" ]; then
