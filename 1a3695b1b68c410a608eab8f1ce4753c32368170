@@ -1,0 +1,1 @@
+{"timestamp":"1445384038","reviewRef":"refs/heads/ojarjur/fix-startup-stability-issues","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com","astroilov@google.com"],"description":"Made the install and run-time setup scripts bail out if they hit any API errors"}
