@@ -31,5 +31,5 @@ read
 echo "RESULT 2"
 echo "OK"
 if [ -s "/var/log/app_engine/custom_logs/shutdown.log" ]; then
-    supervisorctl shutdown
+    /opt/phabricator/bin/phd stop >> /var/log/app_engine/custom_logs/phd_stop.log
 fi
