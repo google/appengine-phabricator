@@ -91,6 +91,7 @@ RUN ln -s /etc/apache2/sites-available/phabricator.conf /etc/apache2/sites-enabl
   mkdir -p /var/tmp/phd/pid && \
   mkdir -p /var/repo && \
   chown www-data:www-data /var/repo && \
+  mkdir -p /usr/local/apache/logs && chown www-data:www-data /usr/local/apache/logs && \
   chmod +x /opt/compile_time_config.sh
 RUN /opt/compile_time_config.sh
 

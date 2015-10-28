@@ -30,7 +30,12 @@ read
 # We must output "RESULT 2\nOK" to let supervisord know the event has been accepted
 echo "RESULT 2"
 echo "OK"
-if [ -s "/var/log/app_engine/custom_logs/shutdown.log" ]; then
-    echo "Shutting down" >> /var/log/app_engine/custom_logs/phd_stop.log
-    /opt/phabricator/bin/phd stop >> /var/log/app_engine/custom_logs/phd_stop.log
-fi
+while true; do
+	if [ -s "/usr/local/apache/logs/shutdown.log" ]; then
+		# Note that the final custom logs written before the VM is shutdown might not
+		# be copied to logs viewer, as there is a race condition between the logs being
+		# written and the fluentd logger shutting down.
+		echo "Shutting down" >> /var/log/app_engine/custom_logs/phd_stop.log
+		/opt/phabricator/bin/phd stop >> /var/log/app_engine/custom_logs/phd_stop.log
+	fi
+done
