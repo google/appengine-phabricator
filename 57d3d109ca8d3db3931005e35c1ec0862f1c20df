@@ -1,0 +1,1 @@
+{"timestamp":"1446048238","reviewRef":"refs/heads/ojarjur/kill-daemons-on-shutdown","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Change the image to make sure that Phabricator daemons are shutdown when the \n/_ah/stop request is received","baseCommit":"23851192cb45314cff98f6ab65fec6d869d826f0"}
