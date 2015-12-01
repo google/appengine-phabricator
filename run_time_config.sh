@@ -18,14 +18,14 @@ cd /opt/phabricator
 export SQL_DETAILS="$(/google/google-cloud-sdk/bin/gcloud sql instances describe ${SQL_INSTANCE} --format=json)"
 if [ -z "${SQL_DETAILS}" ]; then
   echo "Failed to lookup details for the '${SQL_INSTANCE}' Cloud SQL instance" >> /var/log/app_engine/custom_logs/setup.log
-  exit
+  exit 1
 fi
 echo "${SQL_DETAILS}" >> /var/log/app_engine/custom_logs/setup.log
 
 export SQL_HOST=$(echo ${SQL_DETAILS} | jq -r '.ipAddresses[0].ipAddress')
 if [ -z "${SQL_HOST}" ]; then
   echo "Failed to lookup the IP address of the '${SQL_INSTANCE}' Cloud SQL instance" >> /var/log/app_engine/custom_logs/setup.log
-  exit
+  exit 1
 fi
 
 export SQL_USER=root
@@ -58,6 +58,7 @@ EOF
 PROJECT=$(curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H 'Metadata-Flavor: Google')
 BACKUP_FILE=$(/google/google-cloud-sdk/bin/gsutil cat gs://${PROJECT}.appspot.com/backups/phabricator.backup)
 if [ -n "$BACKUP_FILE" ]; then
+  echo "Restoring from backup ${BACKUP_FILE}" >> /var/log/app_engine/custom_logs/setup.log
   /google/google-cloud-sdk/bin/gsutil cp ${BACKUP_FILE} /tmp/phabricator.backup.tgz
   tar -xvzf /tmp/phabricator.backup.tgz -C /
 fi

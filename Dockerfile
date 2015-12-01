@@ -144,4 +144,4 @@ RUN chmod +x /opt/run_time_config.sh && \
 # Install uuidgen and jq, so that the run-time setup script can setup the Cloud SQL instance.
 RUN apt-get install -y --no-install-recommends uuid-runtime jq
 
-CMD ["/bin/sh", "-c", "echo One time config; /opt/run_time_config.sh; echo Upgrading the SQL database; /opt/phabricator/bin/storage upgrade --force; /usr/bin/supervisord"]
+CMD ["/bin/sh", "-c", "echo One time config && /opt/run_time_config.sh && echo Upgrading the SQL database && /opt/phabricator/bin/storage upgrade --force && /usr/bin/supervisord"]
