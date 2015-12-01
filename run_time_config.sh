@@ -61,3 +61,11 @@ if [ -n "$BACKUP_FILE" ]; then
   /google/google-cloud-sdk/bin/gsutil cp ${BACKUP_FILE} /tmp/phabricator.backup.tgz
   tar -xvzf /tmp/phabricator.backup.tgz -C /
 fi
+
+# Configure git
+echo "Configuring git" >> /var/log/app_engine/custom_logs/setup.log
+cd ~/
+git config --global --add user.name "git-mirror"
+git config --global --add user.email "git-mirror@phabricator-dot-${PROJECT}.appspot.com"
+git config --global --list 2>&1 >> /var/log/app_engine/custom_logs/setup.log
+echo "Finished configuring git" >> /var/log/app_engine/custom_logs/setup.log
