@@ -1,0 +1,1 @@
+{"timestamp":"1448999187","reviewRef":"refs/heads/ojarjur/fail-on-errors","targetRef":"refs/heads/master","requester":"ojarjur@google.com","reviewers":["ckerur@google.com"],"description":"Fixed an issue where failures during setup did not cause the Docker container to exit","baseCommit":"81ec6d99a21ea9fd5133b3e6e1fc5421b7e32d79"}
