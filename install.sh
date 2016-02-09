@@ -59,7 +59,7 @@ EOF
 </html>
 EOF
   local status=1
-  gcloud preview app deploy --force --quiet --project $target_project \
+  gcloud preview app deploy --quiet --project $target_project \
     $tmp_dir/app.yaml --version v1
   [[ $? ]] && status=0 || echo "Failed to deploy default module to $target_project"
   rm -rf $tmp_dir
@@ -112,5 +112,5 @@ fi
 sed -i -e "s/\${SQL_INSTANCE}/${INSTANCE_NAME}/" \
   -e "s/\${PROJECT}/${PROJECT}/" \
   -e "s/\${VERSION}/${VERSION}/" config/app.yaml
-gcloud --project="${PROJECT}" --quiet preview app deploy --version=${VERSION} --set-default config/app.yaml
+gcloud --project="${PROJECT}" --quiet preview app deploy --version=${VERSION} config/app.yaml
 git checkout -- config/app.yaml config/Dockerfile
