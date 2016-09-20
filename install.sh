@@ -20,9 +20,9 @@ VERSION=1
 # Local tag for the Docker image we deploy
 LOCAL_IMAGE="google/phabricator-appengine"
 
-function defaultModuleExists() {
+function defaultServiceExists() {
   local project=$1
-  local count=$(gcloud --quiet preview app modules list default --project $project 2>&1 \
+  local count=$(gcloud --quiet app services list --format "value(id)" --project $project 2>&1 \
     | grep -o "^default" | wc -l)
   if [[ $count -gt 0 ]]; then
     return 0
@@ -31,13 +31,13 @@ function defaultModuleExists() {
   fi
 }
 
-function deployDefaultModule() {
+function deployDefaultService() {
   local target_project=$1
   local tmp_dir=$(mktemp -d --tmpdir=$(pwd))
   echo
-  echo "Default module doesn't exist, deploying default module now..."
+  echo "Default service doesn't exist, deploying default service now..."
   cat > ${tmp_dir}/app.yaml <<EOF
-module: default
+service: default
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -59,15 +59,15 @@ EOF
 </html>
 EOF
   local status=1
-  gcloud preview app deploy --quiet --project $target_project \
+  gcloud app deploy --quiet --project $target_project \
     $tmp_dir/app.yaml --version v1
-  [[ $? ]] && status=0 || echo "Failed to deploy default module to $target_project"
+  [[ $? ]] && status=0 || echo "Failed to deploy default service to $target_project"
   rm -rf $tmp_dir
   return $status
 }
 
-if ! defaultModuleExists $PROJECT; then
-  if ! deployDefaultModule $PROJECT; then
+if ! defaultServiceExists $PROJECT; then
+  if ! deployDefaultService $PROJECT; then
     exit
   fi
 fi
@@ -112,5 +112,5 @@ fi
 sed -i -e "s/\${SQL_INSTANCE}/${INSTANCE_NAME}/" \
   -e "s/\${PROJECT}/${PROJECT}/" \
   -e "s/\${VERSION}/${VERSION}/" config/app.yaml
-gcloud --project="${PROJECT}" --quiet preview app deploy --version=${VERSION} config/app.yaml
+gcloud --project="${PROJECT}" --quiet app deploy --version=${VERSION} config/app.yaml
 git checkout -- config/app.yaml config/Dockerfile
