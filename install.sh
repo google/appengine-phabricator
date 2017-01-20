@@ -78,7 +78,7 @@ if [ -n "$(docker images -q --all ${LOCAL_IMAGE})" ]; then
   export ESCAPED_REMOTE_IMAGE="gcr\.io\/${PROJECT}\/appengine-phabricator"
 
   # Push the local image to the project's gcr.io repo
-  docker tag -f ${LOCAL_IMAGE} ${REMOTE_IMAGE}
+  docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}
   gcloud docker push ${REMOTE_IMAGE}
 
   # Update the Dockerfile to point at that newly pushed image
