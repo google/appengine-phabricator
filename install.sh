@@ -105,7 +105,7 @@ fi
 
 # Ensure that a private networks exists for Phabricator
 if [ -z "$(gcloud --project=${PROJECT} --quiet compute networks list | grep phabricator)" ]; then
-  gcloud --project="${PROJECT}" --quiet compute networks create phabricator --range "10.0.0.0/24"
+  gcloud --project="${PROJECT}" --quiet compute networks create phabricator
 fi
 
 # Set the appropriate environment variables in the app.yaml file
