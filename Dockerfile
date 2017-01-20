@@ -111,7 +111,6 @@ RUN apt-get install unzip && \
       --rc-path=/etc/bash.bashrc \
       --disable-installation-options && \
   /google/google-cloud-sdk/bin/gcloud config set \
-      --scope installation \
       component_manager/disable_update_check True
 
 # Support Gerrit
