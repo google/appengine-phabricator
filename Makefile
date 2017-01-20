@@ -15,10 +15,10 @@ deploy: build deploy_requirements
 # locally-tagged "google/phabricator-appengine" image.
 
 testing: build
-	docker tag -f google/phabricator-appengine gcr.io/developer_tools_bundle/bundle-phabricator:testing
+	docker tag google/phabricator-appengine gcr.io/developer_tools_bundle/bundle-phabricator:testing
 	gcloud docker push gcr.io/developer_tools_bundle/bundle-phabricator:testing
 
 release:
 	gcloud docker pull gcr.io/developer_tools_bundle/bundle-phabricator:testing
-	docker tag -f gcr.io/developer_tools_bundle/bundle-phabricator:testing gcr.io/developer_tools_bundle/bundle-phabricator:latest
+	docker tag gcr.io/developer_tools_bundle/bundle-phabricator:testing gcr.io/developer_tools_bundle/bundle-phabricator:latest
 	docker push gcr.io/developer_tools_bundle/bundle-phabricator:latest
